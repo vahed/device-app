@@ -35,27 +35,12 @@ Route::get('/register', function (Request $request) {
 // login
 Route::post('/login', function (Request $request) {
     
-    // $credentials = $request->only('email', 'password');
-    
-    // if(! auth()->attempt($credentials)){
-    //     throw ValidationException::withMessages([
-    //         'email' => 'Invalid credentials'
-    //     ]);
-    //     return response()->json('Invalid credentials', 201);
-    // }
-
-    // $request->session()->regenerate();
-
-    // return response()->json('correct login', 201);
-    //return response()->json($request->data['email'], 201);
     $user = User::where('email', $request->data['email'])->first();
-    // return response()->json($user->password, 201);
     if (! $user || ! Hash::check($request->data['password'], $user->password)) {
         throw ValidationException::withMessages([
             'message' => ['The provided credentials are incorrect.'],
         ]);
     }
-    //return response()->json($request->session()->regenerate(), 201);
     return $request->session()->regenerate();
 });
 
