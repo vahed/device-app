@@ -45,7 +45,7 @@ Route::post('/login', function (Request $request) {
 });
 
 // logout
-Route::post('logout', function(Request $request){
+Route::post('/logout', function(Request $request){
     auth()->guard('web')->logout();
 
     $request->session()->invalidate();
