@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\DeviceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // register
-Route::get('/register', function (Request $request) {
+Route::post('/register', function (Request $request) {
         $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
@@ -34,9 +35,8 @@ Route::get('/register', function (Request $request) {
 
 // login
 Route::post('/login', function (Request $request) {
-    
-    $user = User::where('email', $request->data['email'])->first();
-    if (! $user || ! Hash::check($request->data['password'], $user->password)) {
+    $user = User::where('email', $request->email)->first();
+    if (! $user || ! Hash::check($request->password, $user->password)) {
         throw ValidationException::withMessages([
             'message' => ['The provided credentials are incorrect.'],
         ]);
@@ -53,3 +53,9 @@ Route::post('logout', function(Request $request){
 
     return response()->json(null, 200);
 });
+
+Route::get('devices', [DeviceController::class, 'showAllDevices']);
+Route::get('devices/{id}', [DeviceController::class, 'showSingleDevice']);
+Route::get('showAllDevicesByOS', [DeviceController::class, 'showAllDevicesByOS']);
+Route::post('devices', [DeviceController::class, 'storeNewDevice']);
+Route::post('devices/{id}', [DeviceController::class, 'destroyDevice']);
