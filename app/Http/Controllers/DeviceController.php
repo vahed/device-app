@@ -34,4 +34,9 @@ class DeviceController extends Controller
         return response()->json($this->deviceRepository->deleteDevice($id));
     }
 
+    public function editDevice(Request $request)
+    {
+        return response()->json($this->deviceRepository->updateDevice($request));
+    }
+
 }

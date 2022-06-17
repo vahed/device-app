@@ -4,6 +4,7 @@ namespace App\Http\Repository;
 
 use App\Models\Device;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class DeviceRepository
 {
@@ -28,15 +29,39 @@ class DeviceRepository
      */
     public function addNewDevice($request)
     {
+        $currentDateTime = now()->toDateTimeString();
+
         Device::firstOrCreate([
             'model' => $request->model,
             'brand' => $request->brand,
             'release_date' => $request->release_date,
             'os' => $request->os,
             'is_new' => $request->is_new,
-            'created_datetime' => now(),
-            'update_datetime' => now()
+            'created_datetime' => $currentDateTime,
+            'update_datetime' => $currentDateTime
         ]);
+
+        return response()->json('New Device added');
+    }
+
+    /**
+     * Ability to update device
+     */
+    public function updateDevice($request)
+    {
+        $currentDateTime = now()->toDateTimeString();
+ 
+        $device = Device::find($request->id);
+
+        $device->brand = $request->brand;
+        $device->model = $request->model;
+        $device->os = $request->os;
+        $device->release_date = $request->release_date;
+        $device->update_datetime = $currentDateTime;
+
+        $device->save();
+        return response()->json('Device updated!');
+
     }
 
     /**

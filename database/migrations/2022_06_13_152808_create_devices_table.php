@@ -22,8 +22,8 @@ return new class extends Migration
             $table->char('os', 50)->nullable();
             $table->boolean('is_new')->nullable();
             $table->date('received_datatime')->nullable();
-            $table->date('created_datetime')->useCurrent();
-            $table->date('update_datetime')->useCurrentOnUpdate();
+            $table->timestamp('created_datetime')->nullable();
+            $table->timestamp('update_datetime')->nullable();
         });
     }
 
