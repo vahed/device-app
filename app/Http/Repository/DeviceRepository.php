@@ -11,17 +11,21 @@ class DeviceRepository
     /**
      * List all the devices including Brand, Model, OS and Release Date
      */
-    public function getDevices(): Object
+    public function getDevices()
     {
-        return Device::all();
+        $devices = Device::all();
+
+        return $devices;
     }
 
     /**
      * List device record by id
      */
-    public function getSingleDevice($id): Object
+    public function getSingleDevice($id)
     {
-        return Device::find($id);
+        $device = Device::find($id);
+
+        return response()->json($device);
     }
 
     /**
@@ -47,10 +51,10 @@ class DeviceRepository
     /**
      * Ability to update device
      */
-    public function updateDevice($request)
+    public function update($request)
     {
         $currentDateTime = now()->toDateTimeString();
- 
+
         $device = Device::find($request->id);
 
         $device->brand = $request->brand;
@@ -59,8 +63,9 @@ class DeviceRepository
         $device->release_date = $request->release_date;
         $device->update_datetime = $currentDateTime;
 
-        $device->save();
-        return response()->json('Device updated!');
+        $device->update();
+
+        return response()->json('Device updated');
 
     }
 

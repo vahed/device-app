@@ -59,4 +59,4 @@ Route::get('devices/{id}', [DeviceController::class, 'showSingleDevice']);
 Route::get('showAllDevicesByOS', [DeviceController::class, 'showAllDevicesByOS']);
 Route::post('devices', [DeviceController::class, 'storeNewDevice']);
 Route::post('devices/{id}', [DeviceController::class, 'destroyDevice']);
-Route::patch( 'devices',[DeviceController::class, 'editDevice']);
+Route::patch( 'devices',[DeviceController::class, 'updateDevice']);

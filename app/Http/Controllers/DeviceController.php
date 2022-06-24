@@ -26,7 +26,7 @@ class DeviceController extends Controller
 
     public function storeNewDevice(Request $request)
     {
-        return response()->json($this->deviceRepository->addNewDevice($request));
+        return response()->json($this->deviceRepository->addNewDevice($request), 201);
     }
 
     public function destroyDevice($id)
@@ -34,9 +34,9 @@ class DeviceController extends Controller
         return response()->json($this->deviceRepository->deleteDevice($id));
     }
 
-    public function editDevice(Request $request)
+    public function updateDevice(Request $request)
     {
-        return response()->json($this->deviceRepository->updateDevice($request));
+        return response()->json($this->deviceRepository->update($request));
     }
 
 }

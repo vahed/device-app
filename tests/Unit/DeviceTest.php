@@ -3,8 +3,9 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
-class ExampleTest extends TestCase
+class DeviceTest extends TestCase
 {
     /**
      * A basic test example.
