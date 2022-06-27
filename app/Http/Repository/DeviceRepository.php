@@ -76,7 +76,9 @@ class DeviceRepository
     {
         $device = Device::find($id);
         $device->delete();
-        return response()->json('Device deleted!');
+        return response()->json(
+            'Device deleted'
+        );
     }
 
 }

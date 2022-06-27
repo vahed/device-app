@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 use App\Models\Device;
+use App\Models\User;
 
 class DevicesTest extends TestCase
 {
@@ -78,6 +79,24 @@ class DevicesTest extends TestCase
             ->assertJson([
                 'original' => 'Device updated',
             ]);
+    }
+
+    public function testDeleteCEO()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $device = Device::factory()->create([
+            'id' => '024834c0-b25c-4aa8-bd69-1b7e12cfcbaa',
+            'brand' => 'changed brand name',
+            'model' => 'Newly update mode'
+        ]); 
+
+        $this->json('DELETE', 'api/devices/' . $device->id, ['Accept' => 'application/json'])
+            ->assertStatus(200)
+            ->assertJson(
+                ['original'  => 'Device deleted']
+            );
     }
 
 }
